@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html>
+  <head>
+
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+	<link crossorigin='anonymous' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' rel='stylesheet'/>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.7/css/all.css'>
+	<link rel='stylesheet' type='text/css' href='mystyle.css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+	<script src="myjs.js"></script>
+
+
+  </head>
+  <body>
+	
+	<div class='wrapper'>
+      <!-- Sidebar Holder -->
+      <nav id='sidebar' class='hide'>
+        <div class='sidebar-header'>
+			<div class='mydiv'>
+              <span class='mymark'><button class='btn btn-dark navbar-btn' id='sidebarCollapse1' type='button'>
+				  <i class='fas fa-bars'></i>
+              </button>
+			  Enjoy Video!
+			  </span>
+			</div>
+        </div>
+
+        <ul class='list-unstyled components'>
+          <li class='active'><a href='#'>Home</a></li>
+		  <li class="active">
+			  <a href="#Submenu" data-toggle="collapse" aria-expanded="false">Subscriptions</a>
+			  <ul class="collapse list-unstyled" id="Submenu">
+				<li><a href="#" onclick="addChannelContent()">All subs</a></li>
+			  </ul>
+		  </li>
+		  <li class="active">
+			  <a href="#Catmenu" data-toggle="collapse" aria-expanded="false">Categories</a>
+			  <ul class="collapse list-unstyled" id="Catmenu">
+			  </ul>
+		  </li>
+
+      <!-- examples
+<p>Dummy Heading</p>
+
+<li class="active">
+<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
+<ul class="collapse list-unstyled" id="homeSubmenu">
+<li><a href="#">Home 1</a></li>
+<li><a href="#">Home 2</a></li>
+<li><a href="#">Home 3</a></li>
+</ul>
+</li>
+
+<li>
+<a href="#">About</a>
+<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+<ul class="collapse list-unstyled" id="pageSubmenu">
+<li><a href="#">Page 1</a></li>
+<li><a href="#">Page 2</a></li>
+<li><a href="#">Page 3</a></li>
+</ul>
+</li>
+<li>
+<a href="#">Portfolio</a>
+</li>
+<li>
+<a href="#">Contact</a>
+</li>
+-->
+        </ul>
+        <div class='sideber-components'>
+        </div>
+        <!--
+<ul class="list-unstyled CTAs">
+<li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>
+<li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a></li>
+</ul>
+-->
+      </nav>
+
+      <!-- Page Content Holder -->
+    <div id='content'>
+
+          <nav class='navbar sticky-top navbar-light bg-light'>
+            <div class='navbar-header'>
+              <span class='mymark'><button class='btn btn-dark navbar-btn' id='sidebarCollapse2' type='button'>
+				  <i class='fas fa-bars'></i>
+              </button>
+			  Enjoy Video!
+			  </span>
+            </div>
+            <!-- Example
+<div class='collapse navbar-collapse'>
+<ul class='navbar-nav'>
+<li class="nav-item"><a class="nav-link"  href='#'>Page</a></li>
+<li class="nav-item"><a class="nav-link"  href='#'>Page</a></li>
+<li class="nav-item"><a class="nav-link"  href='#'>Page</a></li>
+<li class="nav-item"><a class="nav-link"  href='#'>Page</a></li>
+</ul>
+</div>
+-->
+          </nav>
+      <div class='post-wrapper container' id='view-content'>
+			<!-- <button id="execute-request-button">Authorize</button>
+			-->
+      </div>
+      </div>
+    </div>
+
+
+    <div class='footer-wrapper'>
+      <div class='container-fluid'>
+        <div class='row'>
+          <div class='col-sm-12 footer'>
+            <font>Have Fun!</font>
+          </div>
+        </div>
+      </div>
+    </div> 
+
+	<!-- Dark Overlay element -->
+    <div class="overlay"></div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script async defer src="https://apis.google.com/js/api.js" 
+					 onload="this.onload=function(){};handleClientLoad()" 
+	  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+	</script>
+
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script crossorigin='anonymous' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
+	<script crossorigin='anonymous' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
+	<script crossorigin='anonymous' integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl' src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.min.js'></script>
+<!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+
+
+	<script type='text/javascript'>
+$(document).ready(function () {
+
+	$("#sidebar").mCustomScrollbar({
+		theme: "minimal"
+	});
+    $('#sidebarCollapse1').on('click', function () {
+        $('#sidebar').addClass('hide');
+		$('.overlay').removeClass('active');
+    });
+    $('.overlay').on('click', function () {
+        $('#sidebar').addClass('hide');
+		$('.overlay').removeClass('active');
+    });
+    $('#sidebarCollapse2').on('click', function () {
+        $('#sidebar').removeClass('hide');
+		$('.overlay').addClass('active');
+
+		// close dropdowns
+        $('.collapse.in').toggleClass('in');
+        // and also adjust aria-expanded attributes we use for the open/closed arrows
+        // in our CSS
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    });
+
+});
+	</script>
+  </body>
+</html>
