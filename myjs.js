@@ -1,4 +1,12 @@
 
+Storage.prototype.setObject = function(key, value) {
+	this.setItem(key, JSON.stringify(value));
+}
+
+Storage.prototype.getObject = function(key) {
+	var value = this.getItem(key);
+	return value && JSON.parse(value);
+}
   /***** START BOILERPLATE CODE: Load client library, authorize user. *****/
 
   // Global variables for GoogleAuth object, auth status.
@@ -9,6 +17,12 @@
   var allVideosPerChannel = {};
   var inserted = false;
   var videoarray = [];
+  var catarray = [];
+  var fakeData = {};
+  fakeData["movie"] = ['UCCqy0xMHSGbQKpe-z1gIOhQ','UCi8e0iOVk1fEOogdfu4YgfA','UCLyYEq4ODlw3OD9qhGqwimw', 'UCgH1T_Pnjg8FPHcYGbglBpw', 'UC3gNmTGu-TTbFPpfSs5kNkg','UCkR0GY0ue02aMyM-oxwgg9g', 'UCt8mg-YL_ikTAJKuZ8GMtqg'];
+  fakeData["music"] = ['UCKI33Zd-b17rDIcPSv9E_-w', 'UCStpPtoeQUYII1Jsbl0qf8A','UC5H_KXkPbEsGs0tFt8R35mA','UCPcF3KTqhD67ADkukx_OeDg', 'UC0C-w0YjGpqDXGB8IHb662A', 'UCAWnuGH5fKJKM-DiWrdbgJA', 'UCJrOtniJ0-NWz37R30urifQ', 'UC7ovu6a8ydIbDy0fAKmoZ9A', 'UCKUlsqazP-4QmxdEtUPlxOA', 'UCd91HSXKhsIv8PIjNrDByHQ', 'UCgQ8olRhkepJWlVF9IVmPGQ'];
+  fakeData["tutorial"] = ['UCEpe5DhhS0HYFBaCVsU2Iwg','UCCezIgC97PvUuR4_gbFUs5g', 'UCEBb1b_L6zDS3xTUrIALZOw'];
+  fakeData["youtuber"] = ['UCxUzQ3wu0oJP_8YLWt71WgQ','UC0NFqwYXVztcVxWqYcfQ4SQ','UCIF_gt4BfsWyM_2GOcKXyEQ', 'UCzIiv_eC7m8bpRTFNbiJpOA', 'UCChByo3iYdAtM54WzptEPkg'];
 
   /**
    * Load the API's client and auth2 modules.
@@ -24,7 +38,7 @@
     // 'scope' field specifies space-delimited list of access scopes
 
     gapi.client.init({
-        'clientId': '',
+        'clientId': '470608578271-mn7c0bbbgbm05gklhokbeo8hluqfc1ai.apps.googleusercontent.com',
         'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'],
         'scope': 'https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner'
     }).then(function () {
@@ -102,6 +116,67 @@
     return params;
   }
 
+  function catContent() {
+	  $('#sidebarCollapse1').click();
+	  $("#view-content").empty();
+	  $("#view-content").append(catarray.join(''));
+  }
+  
+  function addCat() {
+	  name=$("#keyword").val();
+	  $("#keyword").val("");
+	  $("#Catmenu").append('<li><a href="#anchor'+name+'" onclick="anchorjump()">'+name+'</li>');	
+	  addCatHelper(name);
+	  catContent();
+	  jump("anchor"+name);
+  }
+
+function anchorjump(){
+	catContent();
+}
+function jump(h){
+    var top = document.getElementById(h).offsetTop; //Getting Y of target element
+    window.scrollTo(0, top);                        //Go there directly or some transition
+}
+
+  function addCatHelper(name) {
+	catarray.push('<div class="cat-wrapper">');
+	catarray.push('<div class="row cat-line">');
+	catarray.push('<div class="col"><h3>'+name.toUpperCase()+'</h3></div></div>');	
+	catarray.push('<a class="anchor" id="anchor'+name+'"></a>');	
+	for (var i = 0; i  < fakeData[name].length; i++) {
+		var id = fakeData[name][i];
+		catarray.push('<div class="row cat-pad">');
+		for (var j = 0; j < allVideosPerChannel[id].items.length && j < 3; j++) {
+			catarray.push('<div class="col">');
+			catarray.push('<img class="center-item img-fluid vi" src="'+ allVideosPerChannel[id].items[j].snippet.thumbnails.medium.url +'">');
+			catarray.push('<div class="cat-details center-item bottom-dark">');
+			catarray.push('<span>');
+			catarray.push(allVideosPerChannel[id].items[j].snippet.title);
+			catarray.push('</span>');
+			catarray.push('</div>');
+			catarray.push('</div>');
+		}
+		catarray.push('</div>');
+		//Do not append directly, we have to have good-formatted div for append to parse.
+	}
+	catarray.push('</div>');
+	console.log("add a cat");
+  }
+  
+  function initCatPage() {
+	  catarray.push('<div class="row">');
+	  catarray.push('<div class="col">');
+	  catarray.push('<form>');
+	  catarray.push('<div class="form-group">');
+	  catarray.push('<input type="text" id="keyword" class="form-control" placeholder="Enter what you want to watch">');
+	  catarray.push('</div>');
+	  catarray.push('<button onclick="addCat()" class="btn btn-primary">Submit</button>');
+	  catarray.push('</form>');
+	  catarray.push('</div>');
+	  catarray.push('</div>');
+  }
+
   function addSub(allSubs) {
 	  for (; current < 4; current++) {
 		  $("#Submenu").append('<li><a href="#">'+allSubs[current].snippet.title+'</a></li>');	
@@ -136,13 +211,20 @@
 		  if (allSubs.length <= response.pageInfo.totalResults) {
 			  executeSubRequest(defineSubRequest(response.nextPageToken));
 		  } else {
-			  itemNum = response.pageInfo.totalResults;
-			  allSubs = uniq(allSubs);
-			  itemNum = allSubs.length;
-			  addSub(allSubs);
-			  getAllVideosPerChannel();
+			  arrangeAllsubs();
 		  }
 	  });
+  }
+
+  function arrangeAllsubs() {
+	  allSubs = uniq(allSubs);
+	  if (localStorage.getObject("allSubs") === null) {
+		  allSubs.splice(0, 1);
+	  }
+	  itemNum = allSubs.length;
+	  addSub(allSubs);
+	  localStorage.setObject("allSubs", allSubs);
+	  getAllVideosPerChannel();
   }
   
   function executeVideoRequest(id, request) { 
@@ -162,14 +244,27 @@
 
   function getAllSubs() {
 	  var request = defineSubRequest();
-	  executeSubRequest(request); 
+	  if (localStorage.getObject("allSubs") === null) {
+		  console.log("A");
+		  executeSubRequest(request); 
+	  } else {
+		  console.log("B");
+		  allSubs = localStorage.getObject("allSubs");
+		  arrangeAllsubs();
+	  }
   }
 
   function getAllVideosPerChannel() {
-	  for (var i = 0; i < allSubs.length; i++) {
-		  var id = allSubs[i].snippet.resourceId.channelId;
-		  var request = defineVideoRequest(id);
-		  executeVideoRequest(id, request);
+	  if (localStorage.getObject("allVideos") === null) {
+		  console.log("AV");
+		  for (var i = 0; i < allSubs.length; i++) {
+			  var id = allSubs[i].snippet.resourceId.channelId;
+			  var request = defineVideoRequest(id);
+			  executeVideoRequest(id, request);
+		  } 
+	  } else {
+		  console.log("BV");
+		  allVideosPerChannel = localStorage.getObject("allVideos");
 	  }
   }
 
@@ -210,6 +305,7 @@
                     '/youtube/v3/subscriptions',
                     params);
   }
+
   function defineVideoRequest(channelId = "") {
 	var params = {};
 	params['type'] = 'video';
@@ -221,18 +317,21 @@
                     params);
   }
 
-  function addChannelContent(force = false) {
+
+  function addChannelContent() {
 	  $('#sidebarCollapse1').click();
+	  $("#view-content").empty();
 	  if (inserted == false) {
 		  for (var i = 0; i  < allSubs.length; i++) {
+			  videoarray.push('<div class="video-wrapper">');
 			  videoarray.push('<div class="row video-line">');
 			  videoarray.push('<div class="col"> <img class="img-thumbnails" src="' + allSubs[i].snippet.thumbnails.default.url + '"> <span>'+allSubs[i].snippet.title+'</span></div></div>');	
 			  var id = allSubs[i].snippet.resourceId.channelId;
-			  videoarray.push('<div class="row video-line">');
+			  videoarray.push('<div class="row">');
 			  for (var j = 0; j < allVideosPerChannel[id].items.length && j < 3; j++) {
 				  videoarray.push('<div class="col">');
-				  videoarray.push('<img class="img-fluid vi" src="'+ allVideosPerChannel[id].items[j].snippet.thumbnails.medium.url +'">');
-				  videoarray.push('<div class="details bottom-dark">');
+				  videoarray.push('<img class="center-item img-fluid vi" src="'+ allVideosPerChannel[id].items[j].snippet.thumbnails.medium.url +'">');
+				  videoarray.push('<div class="details center-item bottom-dark">');
 				  videoarray.push('<span>');
 				  videoarray.push(allVideosPerChannel[id].items[j].snippet.title);
 				  videoarray.push('</span>');
@@ -240,14 +339,13 @@
 				  videoarray.push('</div>');
 			  }
 			  videoarray.push('</div>');
+			  videoarray.push('</div>');
 			  //Do not append directly, we have to have good-formatted div for append to parse.
 		  }
 		  $("#view-content").append(videoarray.join(''));
 		  inserted = true;
 	  } else {
-		  if (force) {
-			  $("#view-content").append(videoarray.join(''));
-		  }
+		  $("#view-content").append(videoarray.join(''));
 	  }
   }
 	

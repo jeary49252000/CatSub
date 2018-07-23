@@ -40,6 +40,7 @@
 		  <li class="active">
 			  <a href="#Catmenu" data-toggle="collapse" aria-expanded="false">Categories</a>
 			  <ul class="collapse list-unstyled" id="Catmenu">
+				<li><a href="#" onclick="catContent()">Cat it!</a></li>
 			  </ul>
 		  </li>
 
@@ -105,8 +106,6 @@
 -->
           </nav>
       <div class='post-wrapper container' id='view-content'>
-			<!-- <button id="execute-request-button">Authorize</button>
-			-->
       </div>
       </div>
     </div>
@@ -166,7 +165,7 @@ $(document).ready(function () {
         // in our CSS
         $('a[aria-expanded=true]').attr('aria-expanded', 'false');
     });
-
+	initCatPage();
 });
 	</script>
   </body>
