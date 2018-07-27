@@ -13,7 +13,40 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
 }
-
+#subplayer {
+    display: none;
+	margin: auto;
+	z-index: 3000;
+}
+.ytp-chrome-controls .ytp-button.ytp-youtube-button { width: 0px; } .ytp-settings-button.ytp-hd-quality-badge:after, .ytp-settings-button.ytp-4k-quality-badge:after, .ytp-settings-button.ytp-5k-quality-badge:after, .ytp-settings-button.ytp-8k-quality-badge:after { background-color: #00f; } .element.style { background-color: lightblue; }
+#player {
+	text-align: center;
+    display:    none;
+    position:   fixed;
+    z-index:    2000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+}
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+#wait {
+    display:    none;
+    position:   fixed;
+    z-index:    2000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('http://i.stack.imgur.com/FhHRx.gif') 
+                50% 50% 
+                no-repeat;
+}
 .mydiv {
 	padding: 0px 10px;
 	color: #000;
@@ -71,6 +104,7 @@ body {
 }
 .vi {
 	border-radius: 4px;
+	cursor: pointer;
 }
 
 .form-group {

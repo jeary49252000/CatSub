@@ -7,6 +7,12 @@ Storage.prototype.getObject = function(key) {
 	var value = this.getItem(key);
 	return value && JSON.parse(value);
 }
+function waitshow() {
+	$('#wait').show();
+}
+function waithide() {
+	$('#wait').hide();
+}
   /***** START BOILERPLATE CODE: Load client library, authorize user. *****/
 
   // Global variables for GoogleAuth object, auth status.
@@ -121,22 +127,37 @@ Storage.prototype.getObject = function(key) {
 	  $("#view-content").empty();
 	  $("#view-content").append(catarray.join(''));
   }
+
+function playVideo(videoID) {
+	$('#player').show();
+	$('#subplayer').show();
+	$('.overlay').addClass('active');
+	$('#subplayer').attr("src", "http://www.youtube.com/embed/" + videoID + "?version=3&enablejsapi=1");
+}
   
-  function addCat() {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function addCat() {
 	  name=$("#keyword").val();
 	  $("#keyword").val("");
 	  $("#Catmenu").append('<li><a href="#anchor'+name+'" onclick="anchorjump()">'+name+'</li>');	
+	  waitshow();
+	  await sleep(1000 + Math.random() * 1000);
+	  waithide();
 	  addCatHelper(name);
 	  catContent();
-	  jump("anchor"+name);
+	  await sleep(250);
+	jump("anchor"+name);
   }
 
 function anchorjump(){
 	catContent();
 }
 function jump(h){
-    var top = document.getElementById(h).offsetTop; //Getting Y of target element
-    window.scrollTo(0, top);                        //Go there directly or some transition
+	var top = document.getElementById(h).offsetTop; //Getting Y of target element
+	window.scrollTo(0, top);                        //Go there directly or some transition
 }
 
   function addCatHelper(name) {
@@ -149,7 +170,7 @@ function jump(h){
 		catarray.push('<div class="row cat-pad">');
 		for (var j = 0; j < allVideosPerChannel[id].items.length && j < 3; j++) {
 			catarray.push('<div class="col">');
-			catarray.push('<img class="center-item img-fluid vi" src="'+ allVideosPerChannel[id].items[j].snippet.thumbnails.medium.url +'">');
+			catarray.push('<img onclick="playVideo(\''+allVideosPerChannel[id].items[j].id.videoId+'\')" class="center-item img-fluid vi" src="'+ allVideosPerChannel[id].items[j].snippet.thumbnails.medium.url +'">');
 			catarray.push('<div class="cat-details center-item bottom-dark">');
 			catarray.push('<span>');
 			catarray.push(allVideosPerChannel[id].items[j].snippet.title);
@@ -219,7 +240,7 @@ function jump(h){
   function arrangeAllsubs() {
 	  allSubs = uniq(allSubs);
 	  if (localStorage.getObject("allSubs") === null) {
-		  allSubs.splice(0, 1);
+		  allSubs.splice(1, 1);
 	  }
 	  itemNum = allSubs.length;
 	  addSub(allSubs);
@@ -330,7 +351,7 @@ function jump(h){
 			  videoarray.push('<div class="row">');
 			  for (var j = 0; j < allVideosPerChannel[id].items.length && j < 3; j++) {
 				  videoarray.push('<div class="col">');
-				  videoarray.push('<img class="center-item img-fluid vi" src="'+ allVideosPerChannel[id].items[j].snippet.thumbnails.medium.url +'">');
+				  videoarray.push('<img onclick="playVideo(\''+allVideosPerChannel[id].items[j].id.videoId+'\')" class="center-item img-fluid vi" src="'+ allVideosPerChannel[id].items[j].snippet.thumbnails.medium.url +'">');
 				  videoarray.push('<div class="details center-item bottom-dark">');
 				  videoarray.push('<span>');
 				  videoarray.push(allVideosPerChannel[id].items[j].snippet.title);

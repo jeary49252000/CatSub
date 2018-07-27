@@ -123,6 +123,10 @@
 
 	<!-- Dark Overlay element -->
     <div class="overlay"></div>
+	<div id="wait"><!-- Place at bottom of page --></div>
+	<div id="player">
+		<iframe id="subplayer" type="text/html" width="80%" height="100%" src="http://www.youtube.com/embed/VIDEO_ID" frameborder="0"></iframe>
+	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script async defer src="https://apis.google.com/js/api.js" 
 					 onload="this.onload=function(){};handleClientLoad()" 
@@ -166,6 +170,12 @@ $(document).ready(function () {
         $('a[aria-expanded=true]').attr('aria-expanded', 'false');
     });
 	initCatPage();
+	$('#player').on('click', function () {
+		$('.overlay').removeClass('active');
+		$('#player').hide();
+		$('#subplayer').hide();
+		$('#subplayer').attr("src", "stop");
+	});
 });
 	</script>
   </body>
